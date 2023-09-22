@@ -4,5 +4,9 @@
     {
         public string Name { get; set; }
         public TypeGenInfo Type { get; set; }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

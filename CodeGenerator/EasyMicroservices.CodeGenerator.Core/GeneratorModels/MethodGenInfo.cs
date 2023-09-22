@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace EasyMicroservices.CodeGenerator.Core.GeneratorModels
 {
@@ -19,5 +20,10 @@ namespace EasyMicroservices.CodeGenerator.Core.GeneratorModels
         /// 
         /// </summary>
         public List<ParameterGenInfo> Parameters { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

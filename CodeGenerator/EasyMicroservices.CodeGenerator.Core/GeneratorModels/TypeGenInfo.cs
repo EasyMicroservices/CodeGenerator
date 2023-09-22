@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace EasyMicroservices.CodeGenerator.Core.GeneratorModels
 {
@@ -16,5 +17,9 @@ namespace EasyMicroservices.CodeGenerator.Core.GeneratorModels
         public TypeGenInfo BaseType { get; set; }
         public List<PropertyGenInfo> Properties { get; set; }
         public List<MethodGenInfo> Methods { get; set; }
+        public override string ToString()
+        {
+            return $"{Namespace}.{Name}";
+        }
     }
 }
