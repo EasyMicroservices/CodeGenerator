@@ -12,13 +12,23 @@ namespace EasyMicroservices.CodeGenerator.DotNetReflection
     public class AssemblyExtractor
     {
         /// <summary>
+        /// These assembly will skip to generate everything from types
+        /// </summary>
+        public List<string> DoNotFallowAssmebles { get; set; } = new List<string>()
+        {
+            "System.Private.CoreLib"
+        };
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="assembly"></param>
         /// <returns></returns>
         public virtual AssemblyGenInfo Extract(Assembly assembly)
         {
-            var typeExtractor = new TypeExtractor();
+            var typeExtractor = new TypeExtractor()
+            {
+                DoNotFallowAssmebles = DoNotFallowAssmebles
+            };
             var result = new AssemblyGenInfo()
             {
                 FileName = assembly.GetName().Name,
@@ -36,7 +46,10 @@ namespace EasyMicroservices.CodeGenerator.DotNetReflection
         public virtual AssemblyGenInfo ExtractSingleType(Type type)
         {
             var assembly = type.Assembly;
-            var typeExtractor = new TypeExtractor();
+            var typeExtractor = new TypeExtractor()
+            {
+                DoNotFallowAssmebles = DoNotFallowAssmebles
+            };
             var result = new AssemblyGenInfo()
             {
                 FileName = assembly.GetName().Name,

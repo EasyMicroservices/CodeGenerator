@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace EasyMicroservices.CodeGenerator.DotNetReflection
 {
@@ -11,6 +12,10 @@ namespace EasyMicroservices.CodeGenerator.DotNetReflection
     /// </summary>
     public class TypeExtractor
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> DoNotFallowAssmebles { get; set; } = new List<string>();
         Dictionary<Type, TypeGenInfo> ExtractedTypes { get; set; } = new Dictionary<Type, TypeGenInfo>();
         /// <summary>
         /// 
@@ -19,23 +24,26 @@ namespace EasyMicroservices.CodeGenerator.DotNetReflection
         /// <returns></returns>
         public virtual TypeGenInfo Extract(Type type)
         {
+            if (type == null)
+                return null;
             if (ExtractedTypes.TryGetValue(type, out TypeGenInfo typeGenInfo))
                 return typeGenInfo;
-            var result = new TypeGenInfo()
-            {
-                IsClass = type.IsClass,
-                IsEnum = type.IsEnum,
-                IsInterface = type.IsInterface,
-                Name = type.Name,
-                Namespace = type.Namespace,
-                BaseType = Extract(type.BaseType),
-                AssemblyFileName = type.Assembly.GetName().Name,
-                GenericArguments = ExtractGenerics(type),
-                Interfaces = ExtractInterfaces(type),
-                Methods = ExtractMethods(type),
-                Properties = ExtractProperties(type)
-            };
+            var assemblyName = type.Assembly.GetName().Name;
+            bool haveToSkip = DoNotFallowAssmebles.Contains(assemblyName);
+            var result = new TypeGenInfo();
             ExtractedTypes.Add(type, result);
+
+            result.IsClass = type.IsClass;
+            result.IsEnum = type.IsEnum;
+            result.IsInterface = type.IsInterface;
+            result.Name = type.Name;
+            result.Namespace = type.Namespace;
+            result.BaseType = haveToSkip ? null : Extract(type.BaseType);
+            result.AssemblyFileName = assemblyName;
+            result.GenericArguments = haveToSkip ? null : ExtractGenerics(type);
+            result.Interfaces = haveToSkip ? null : ExtractInterfaces(type);
+            result.Methods = haveToSkip ? null : ExtractMethods(type);
+            result.Properties = haveToSkip ? null : ExtractProperties(type);
 
             return result;
         }
@@ -47,12 +55,13 @@ namespace EasyMicroservices.CodeGenerator.DotNetReflection
         /// <returns></returns>
         public virtual List<PropertyGenInfo> ExtractProperties(Type type)
         {
-            return type.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
-            .Select(x => new PropertyGenInfo()
-            {
-                Name = x.Name,
-                Type = Extract(x.PropertyType)
-            }).ToList();
+            return type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Where(x => !x.IsDefined(typeof(CompilerGeneratedAttribute), false))
+                .Select(x => new PropertyGenInfo()
+                {
+                    Name = x.Name,
+                    Type = Extract(x.PropertyType)
+                }).ToList();
         }
 
         /// <summary>
@@ -62,7 +71,8 @@ namespace EasyMicroservices.CodeGenerator.DotNetReflection
         /// <returns></returns>
         public virtual List<MethodGenInfo> ExtractMethods(Type type)
         {
-            return type.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
+            return type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Where(x => !x.IsDefined(typeof(CompilerGeneratedAttribute), false))
                 .Select(x => new MethodGenInfo()
                 {
                     Name = x.Name,
