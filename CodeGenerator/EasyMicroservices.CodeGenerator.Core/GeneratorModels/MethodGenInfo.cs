@@ -1,4 +1,4 @@
-﻿namespace CodeGenerator.Core.GeneratorModels
+﻿namespace EasyMicroservices.CodeGenerator.Core.GeneratorModels
 {
     public class MethodGenInfo
     {
