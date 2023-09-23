@@ -8,11 +8,11 @@
     <Version>0.0.0.1</Version>
     <Description>Code generation</Description>
     <Copyright>EasyMicroservices@gmail.com</Copyright>
-    <PackageTags>code,generate,generator</PackageTags>
+    <PackageTags>code,generate,generator,swagger</PackageTags>
     <PackageProjectUrl>https://github.com/EasyMicroservices/CodeGenerator</PackageProjectUrl>
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>.\bin\$(Configuration)\$(TargetFramework)\EasyMicroservices.CodeGenerator.DotNetReflection.xml</DocumentationFile>
+    <DocumentationFile>.\bin\$(Configuration)\$(TargetFramework)\EasyMicroservices.CodeGenerator.Swagger.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
