@@ -20,9 +20,9 @@ jobs:
       - name: Install Android
         run: dotnet workload install android
       - name: Restore dependencies
-        run: dotnet restore ./src/CSharp/EasyMicroservices.Laboratory.sln
+        run: dotnet restore ./src/CSharp/EasyMicroservices.CodeGenerator.sln
       - name: Build
-        run: dotnet build ./src/CSharp/EasyMicroservices.Laboratory.sln --no-restore
+        run: dotnet build ./src/CSharp/EasyMicroservices.CodeGenerator.sln --no-restore
       - name: Test
         run:  |
           dotnet test ./src/CSharp/EasyMicroservices.CodeGenerator.sln --no-build --verbosity normal -f net6.0
