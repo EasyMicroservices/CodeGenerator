@@ -15,7 +15,10 @@ namespace EasyMicroservices.CodeGenerator.Core.GeneratorModels
         /// 
         /// </summary>
         public List<TypeGenInfo> Types { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return FileName;

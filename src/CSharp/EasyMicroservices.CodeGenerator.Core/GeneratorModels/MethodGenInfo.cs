@@ -20,7 +20,10 @@ namespace EasyMicroservices.CodeGenerator.Core.GeneratorModels
         /// 
         /// </summary>
         public List<ParameterGenInfo> Parameters { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Name;
