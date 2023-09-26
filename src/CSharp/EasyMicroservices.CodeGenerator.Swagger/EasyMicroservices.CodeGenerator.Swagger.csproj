@@ -1,10 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net7.0</TargetFrameworks>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Authors>EasyMicroservices</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.0.1</Version>
+    <Description>Code generation</Description>
+    <Copyright>EasyMicroservices@gmail.com</Copyright>
+    <PackageTags>code,generate,generator</PackageTags>
+    <PackageProjectUrl>https://github.com/EasyMicroservices/CodeGenerator</PackageProjectUrl>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>.\bin\$(Configuration)\$(TargetFramework)\EasyMicroservices.CodeGenerator.DotNetReflection.xml</DocumentationFile>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\EasyMicroservices.CodeGenerator.Core\EasyMicroservices.CodeGenerator.Core.csproj" />
   </ItemGroup>
